@@ -10,7 +10,7 @@
       text-align: center;
       margin-top: 20px;
       font-size: 1.5rem;
-      background-color: #fffaf5;
+      background-color: #ffffff;
     }
     .reaction-button {
       display: inline-block;
@@ -21,7 +21,7 @@
       background: none;
     }
     .reaction-button.selected {
-      background-color: #ffdfe5;
+      background-color: #bbb0c5;
       border-radius: 8px;
       padding: 4px 8px;
     }
@@ -69,13 +69,7 @@
 
     function selectReaction(type) {
       var previous = getSavedReaction();
-      if (previous && previous !== type) {
-        var refPrev = db.ref('reactions/' + articleID + '/' + previous);
-        refPrev.transaction(function (current) {
-          return (current || 1) - 1;
-        });
-        document.querySelector('[onclick="selectReaction(\'' + previous + '\')"]').classList.remove('selected');
-      }
+      if (previous) return; // すでに投票済みなら無視
 
       var refNew = db.ref('reactions/' + articleID + '/' + type);
       refNew.transaction(function (current) {
